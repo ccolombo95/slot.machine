@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preprocesadores (SASS, SCSS, Stylus)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section>
+      <aside id="names" class="names">
+        <span class="names menu__icon">
+          <img src="./public/imgs/users-solid.svg" alt="" />
+        </span>
+        <form id="names-form">
+          <h2 class="names">Nombres</h2>
+          <div class="input-list names" id="names-list">
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div><input type="text" class="input-name" required /></div>
+            <div>
+              <input type="text" class="input-name" required />
+              <img
+                src="./public/imgs/plus-solid.svg"
+                class="plus"
+                id="plus-name"
+              />
+            </div>
+          </div>
+          <button type="submit" id="save-names" class="save">Guardar</button>
+        </form>
+      </aside>
+      <aside id="questions" class="questions">
+        <span class="questions menu__icon">
+          <img src="./public/imgs/question-solid.svg" alt="" />
+        </span>
+        <form id="questions-form">
+          <h2 class="questions">Preguntas</h2>
+          <div class="input-list questions" id="questions-list">
+            <div><input type="text" class="input-question" required /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+            <div><input type="text" class="input-question" /></div>
+
+            <div>
+              <input type="text" class="input-question" />
+              <img
+                src="./public/imgs/plus-solid.svg"
+                class="plus"
+                id="plus-question"
+              />
+            </div>
+          </div>
+          <button type="submit" id="save-questions" class="save">
+            Guardar
+          </button>
+        </form>
+      </aside>
+    </section>
+    <main>
+      <div class="top">
+        <div class="arrow" id="arrow"></div>
+        <div class="slots">
+          <div class="reel">
+            <div class="slider"></div>
+          </div>
+        </div>
+
+        <div class="ruleman"></div>
+
+        <div id="start" class="start">
+          <div id="ball" class="start__ball"></div>
+          <div id="stick" class="start__stick"></div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="box"></div>
+        <div class="ticket" id="ticket">
+          <p id="text"></p>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
