@@ -10,8 +10,7 @@ $font_questions: Ticketing;
 }
 
 body {
-  height: 100%;
-  width: 100%;
+  overflow: hidden;
   margin: 0;
   font-size: 18px;
   background: rgb(0, 0, 0);
@@ -23,18 +22,17 @@ body {
     rgba(3, 34, 71, 1) 73%,
     #03254c 100%
   );
-  overflow-y: hidden;
-  overflow-x: hidden;
 }
 main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+
+  height: 100%;
   width: 100%;
   margin: 0;
-  padding-top: 1.5rem;
+  padding-top: 2rem;
   .top {
     display: flex;
     justify-content: center;
@@ -205,25 +203,25 @@ main {
 
     .start {
       height: 100%;
-      position: relative;
       cursor: pointer;
       &__ball {
         position: relative;
         z-index: 3;
         height: 30px;
         width: 30px;
-        transform: translate(-9px, 0px);
+        transform: translate(-9px, -60px);
         border-radius: 15px;
         border: 1px solid rgb(224, 73, 73);
         background: linear-gradient(rgb(255, 106, 106) 0%, rgb(155, 4, 4) 100%);
       }
       &__stick {
-        height: 140px;
+        position: relative;
+
+        height: 110px;
         width: 12px;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
-        position: relative;
-        transform: translateY(-10px);
+        transform: translateY(-65px);
 
         background: linear-gradient(
           to right,
@@ -254,15 +252,15 @@ main {
         }
         50% {
           background: linear-gradient(rgb(255, 69, 69) 0%, rgb(155, 4, 4) 100%);
-          transform: translate(-9px, 25px);
+          transform: translate(-9px, -45px);
         }
       }
 
       @keyframes stickShorten {
         0%,
         100% {
-          height: 140px;
-          transform: translateY(-5px);
+          height: 110px;
+          transform: translateY(-65px);
           background: linear-gradient(
             to right,
             #808080,
@@ -280,8 +278,8 @@ main {
           );
         }
         50% {
-          height: 100px;
-          transform: translateY(25px);
+          height: 80px;
+          transform: translateY(-50px);
           background: linear-gradient(
             to right,
             #808080,
@@ -327,12 +325,12 @@ main {
       clip-path: polygon(
         5% 0,
         95% 0,
-        97% 14%,
-        98% 41%,
-        98% 100%,
-        2% 100%,
-        2% 41%,
-        3% 14%
+        96.8% 17%,
+        97.5% 42%,
+        97.5% 100%,
+        2.5% 100%,
+        2.5% 42%,
+        3.3% 17%
       );
       background-image: linear-gradient(
         0deg,
@@ -366,8 +364,8 @@ main {
           height: 0px;
         }
         100% {
-          height: 160px;
-          transform: translateY(80px);
+          height: 140px;
+          transform: translateY(70px);
         }
       }
 
@@ -381,8 +379,8 @@ main {
       }
       @keyframes ticketDrop {
         0% {
-          height: 160px;
-          transform: translateY(80px);
+          height: 140px;
+          transform: translateY(65px);
         }
         20% {
           transform: rotate(-45deg);
@@ -402,8 +400,8 @@ main {
           border: none;
         }
         100% {
-          height: 160px;
-          transform: translateY(80px);
+          height: 140px;
+          transform: translateY(70px);
         }
       }
     }
@@ -413,15 +411,17 @@ main {
 section {
   display: inline-flex;
   justify-content: space-between;
+  position: absolute;
   width: 100%;
   height: 0;
-  position: absolute;
   z-index: 1000;
 
   aside {
     width: 130px;
     min-height: 120px;
+    max-width: 100%;
     height: 100%;
+    z-index: 1000;
 
     display: inline-flex;
     align-items: flex-start;
@@ -453,10 +453,10 @@ section {
 
     & form {
       height: 0;
-      position: relative;
       visibility: hidden;
       margin: 0 auto;
       width: 100%;
+
       padding: 0;
       opacity: 0;
       transition: opacity 1s ease-in-out;
@@ -502,13 +502,21 @@ section {
           transition: opacity 0.5s ease, transform 0.5s ease;
         }
         & div input {
-          padding: 0.5rem 0.3rem;
+          padding: 0.5rem 0.5rem;
           margin: 0;
           width: 100%;
           font-size: 1rem;
+          color: rgb(98, 96, 96);
+          background-color: rgb(233, 232, 232);
 
-          border-radius: 15px;
-          border-style: none;
+          border-radius: 8px;
+          border: none;
+        }
+        & div input:focus {
+          color: #080808;
+          outline: none;
+          background-color: rgb(223, 222, 222);
+          transition: all 0.5s;
         }
 
         & div .plus {
@@ -526,7 +534,7 @@ section {
         cursor: pointer;
 
         border: 1px solid #043b7a;
-        border-radius: 5px;
+        border-radius: 8px;
         background-color: rgb(4, 48, 97);
       }
       button:hover {
@@ -536,7 +544,7 @@ section {
     }
     & form.active {
       height: 100%;
-      width: 50vw;
+      width: 100%;
       height: 75vh;
       visibility: visible;
       opacity: 1;
@@ -545,9 +553,10 @@ section {
   }
   aside.active {
     height: 100vh;
-    z-index: 100;
+    z-index: 1000;
     border-radius: 0;
     transition: all 0.5s ease-in-out;
+    background-color: #f7f7f7;
   }
   aside.questions.active {
     width: 40vw;

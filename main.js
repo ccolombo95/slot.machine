@@ -4,6 +4,32 @@ import "./scss/style.scss";
 const plusName = document.getElementById("plus-name");
 const plusQuestion = document.getElementById("plus-question");
 
+function createAndAddInput(elementId, inputClass, listId, maxChildren) {
+  const list = document.getElementById(listId);
+
+  const div = document.createElement("div");
+  div.classList.add("new-input");
+
+  const input = document.createElement("input");
+  input.classList.add(inputClass);
+
+  div.appendChild(input);
+
+  if (list.children.length < maxChildren - 1) {
+    const img = document.createElement("img");
+    img.classList.add("plus");
+    img.src = "./public/imgs/plus-solid.svg";
+    img.id = elementId;
+
+    div.appendChild(img);
+  }
+
+  list.appendChild(div);
+
+  setTimeout(() => {
+    div.classList.add("visible");
+  }, 10);
+}
 function addPlusListener(elementId, inputClass, listId, maxChildren) {
   const plus = document.querySelector(`#${elementId}`);
 
@@ -18,32 +44,11 @@ function addPlusListener(elementId, inputClass, listId, maxChildren) {
 
     plus.remove();
 
-    const div = document.createElement("div");
-    div.classList.add("new-input");
-
-    const input = document.createElement("input");
-    input.classList.add(inputClass);
-
-    div.appendChild(input);
-
-    if (list.children.length < maxChildren - 1) {
-      const img = document.createElement("img");
-      img.classList.add("plus");
-      img.src = "./public/imgs/plus-solid.svg";
-      img.id = elementId;
-
-      div.appendChild(img);
-    }
-
-    list.appendChild(div);
+    createAndAddInput(elementId, inputClass, listId, maxChildren);
 
     if (list.children.length < maxChildren) {
       addPlusListener(elementId, inputClass, listId, maxChildren);
     }
-
-    setTimeout(() => {
-      div.classList.add("visible");
-    }, 10);
   });
 }
 
@@ -89,35 +94,29 @@ closeMenuOnClickOutside(asideQuestion, divQuestions, plusQuestion);
 
 //! --------- Slot Machine ---------------------
 
-const preguntasMap = [
-    "¿Cuál es el propósito de la vida?",
-    "¿Qué es la realidad?",
-    "¿Existe el libre albedrío?",
-    "¿Qué es la verdad?",
-    "¿Qué define la identidad personal?",
-    "¿Es el conocimiento posible?",
-    "¿Qué significa vivir una buena vida?",
-    "¿Qué es la justicia?",
-    "¿Existen los universales?",
-    "¿Es posible la objetividad?",
-    "¿Cuál es la naturaleza de la conciencia?",
-    "¿Hay vida después de la muerte?",
-    "¿Es el sufrimiento una parte inevitable de la existencia?",
-    "¿Cuál es el papel de la moralidad en la vida humana?",
-    "¿Es posible la paz mundial?",
+const questionsMap = [
+    "¿Cuál es la mayor contribución de esta persona a la sociedad?",
+    "¿En qué ámbito se destacó esta persona?",
+    "¿Por qué es conocida esta persona?",
+    "¿Cuál fue un momento clave en la vida de esta persona?",
+    "¿Qué impacto tuvo esta persona en la historia de su país?",
+    "¿Qué legado dejó esta persona para las futuras generaciones?",
+    "¿Cuáles fueron los desafíos más grandes que enfrentó esta persona?",
+    "¿Qué valores o principios representaba esta persona?",
+    "¿Cómo ha influido esta persona en la cultura popular?",
+    "¿Qué es lo más inspirador de la historia de esta persona?",
   ],
   nameMap = [
-    "Albert Einstein",
-    "Marie Curie",
-    "Leonardo da Vinci",
-    "Mahatma Gandhi",
-    "Nelson Mandela",
-    "William Shakespeare",
-    "Frida Kahlo",
-    "Pablo Picasso",
-    "Beyonce",
-    "Madonna",
-    "Britney Spears",
+    "Manuel Belgrano",
+    "José de San Martín",
+    "Juana Azurduy",
+    "María Remedios del Valle",
+    "Domingo Faustino Sarmiento",
+    "Eva Perón",
+    "Julieta Lanteri",
+    "Hipólito Yrigoyen",
+    "Victoria Ocampo",
+    "Bernardo Houssay",
   ],
   startButton = document.getElementById("start"),
   icon_width = 300,
@@ -195,6 +194,7 @@ if (!storedNames || storedNames === null || storedNames === "") {
   cloneIcons();
   cloneIcons();
 }
+const storedQuestions = localStorage.getItem("questions");
 
 const questionsForm = document.getElementById("questions-form");
 questionsForm.addEventListener("submit", function (event) {
@@ -205,6 +205,55 @@ questionsForm.addEventListener("submit", function (event) {
     .filter((value) => value !== "");
   localStorage.setItem("questions", JSON.stringify(questionsArray));
 });
+function loadData(storedData, dataMap, listId, inputClass, maxChildren) {
+  const parsedData = storedData ? JSON.parse(storedData) : dataMap;
+  const list = document.getElementById(listId);
+
+  // Eliminar todos los inputs existentes
+  list.innerHTML = "";
+
+  // Crear inputs según los datos almacenados
+  parsedData.forEach((item, index) => {
+    createAndAddInput(
+      `plus-${inputClass.split("-")[1]}`,
+      inputClass,
+      listId,
+      maxChildren
+    );
+
+    const input = list.children[index].querySelector(`.${inputClass}`);
+    if (input) {
+      input.value = item;
+    }
+  });
+
+  // Eliminar la imagen "plus" de todos los inputs excepto el último
+  const plusImages = list.querySelectorAll(".plus");
+  plusImages.forEach((plus, index) => {
+    if (index !== plusImages.length - 1) {
+      plus.remove();
+    }
+  });
+
+  // Añadir listener al último input si no se ha alcanzado el máximo
+  if (list.children.length < maxChildren) {
+    const lastPlus = list.querySelector(".plus");
+    if (lastPlus) {
+      addPlusListener(
+        `plus-${inputClass.split("-")[1]}`,
+        inputClass,
+        listId,
+        maxChildren
+      );
+    }
+  }
+}
+
+// Cargar nombres
+loadData(storedNames, nameMap, "names-list", "input-name", 30);
+
+// Cargar preguntas
+loadData(storedQuestions, questionsMap, "questions-list", "input-question", 20);
 
 //! ------------ Sistema del slot machine ------------------
 /**
@@ -269,8 +318,8 @@ function slotMachineAnimation() {
     storedQuestions === null ||
     storedQuestions === ""
   ) {
-    const indiceRandom = Math.floor(Math.random() * preguntasMap.length);
-    text.textContent = `${preguntasMap[indiceRandom]}`;
+    const indiceRandom = Math.floor(Math.random() * questionsMap.length);
+    text.textContent = `${questionsMap[indiceRandom]}`;
   }
 
   const ball = document.getElementById("ball");
@@ -314,3 +363,30 @@ startButton.addEventListener("click", slotMachineAnimation);
 
 // Start button event listener
 startButton.addEventListener("click", rollReel);
+localStorage.clear();
+
+function updateLastAccessDate() {
+  const currentDate = new Date().getTime();
+  localStorage.setItem("lastAccessDate", currentDate);
+}
+function clearLocalStorageIfNeeded() {
+  const lastAccessDate = localStorage.getItem("lastAccessDate");
+  const currentDate = new Date().getTime();
+
+  if (lastAccessDate) {
+    const daysDifference =
+      (currentDate - lastAccessDate) / (1000 * 60 * 60 * 24);
+    if (daysDifference > 3) {
+      localStorage.clear();
+    }
+  } else {
+    // Si no hay fecha de acceso, guárdala ahora
+    updateLastAccessDate();
+  }
+}
+
+// Llamar a la función para verificar y limpiar localStorage si es necesario
+clearLocalStorageIfNeeded();
+
+// Luego, actualizar la fecha de acceso al usar la aplicación
+updateLastAccessDate();
