@@ -324,25 +324,21 @@ function slotMachineAnimation() {
 
   const ball = document.getElementById("ball");
   const stick = document.getElementById("stick");
-  const arrow = document.getElementById("arrow");
   const ticket = document.getElementById("ticket");
 
   // Reinicia la animación removiendo y volviendo a agregar la clase
   ball.style.animation = "none";
   stick.style.animation = "none";
-  arrow.style.animation = "none";
   ticket.style.animation = "none";
   text.style.animation = "none";
 
   // Fuerza el navegador a recalcular los estilos
   void ball.offsetWidth;
   void stick.offsetWidth;
-  void arrow.offsetWidth;
 
   // Vuelve a iniciar las animaciones
   ball.style.animation = "ballColorChange 2s forwards";
   stick.style.animation = "stickShorten 2s forwards";
-  arrow.style.animation = "win1 1s steps(2, end) infinite";
 
   // Aplica animación dependiendo del número de clics
   if (clickCount >= 1) {
