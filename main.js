@@ -18,7 +18,7 @@ function createAndAddInput(elementId, inputClass, listId, maxChildren) {
   if (list.children.length < maxChildren - 1) {
     const img = document.createElement("img");
     img.classList.add("plus");
-    img.src = "./public/imgs/plus-solid.svg";
+    img.src = "/imgs/plus-solid.svg";
     img.id = elementId;
 
     div.appendChild(img);
