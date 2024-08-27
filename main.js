@@ -140,9 +140,13 @@ const cloneIcons = () => {
 
 namesForm.addEventListener("submit", function (event) {
   event.preventDefault();
+  const check = document.getElementById("check-name");
+  check.style.animation = "save 1s forwards";
 
   const inputs = document.querySelectorAll(".input-name");
-  const namesArray = Array.from(inputs).map((input) => input.value);
+  const namesArray = Array.from(inputs)
+    .map((input) => input.value.trim())
+    .filter((value) => value !== "");
 
   localStorage.setItem("names", JSON.stringify(namesArray));
   if (namesArray.length >= 10) {
@@ -199,9 +203,12 @@ const storedQuestions = localStorage.getItem("questions");
 const questionsForm = document.getElementById("questions-form");
 questionsForm.addEventListener("submit", function (event) {
   event.preventDefault();
+  const checkQuestion = document.getElementById("check-question");
+  checkQuestion.style.animation = "save 1s forwards";
+
   const inputs = document.querySelectorAll(".input-question");
   const questionsArray = Array.from(inputs)
-    .map((input) => input.value.trim()) // .trim() elimina espacios en blanco alrededor
+    .map((input) => input.value.trim())
     .filter((value) => value !== "");
   localStorage.setItem("questions", JSON.stringify(questionsArray));
 });
