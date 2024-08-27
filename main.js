@@ -111,12 +111,12 @@ const questionsMap = [
     "José de San Martín",
     "Juana Azurduy",
     "María Remedios del Valle",
-    "Domingo Faustino Sarmiento",
     "Eva Perón",
     "Julieta Lanteri",
-    "Hipólito Yrigoyen",
     "Victoria Ocampo",
     "Bernardo Houssay",
+    "Hipólito Yrigoyen",
+    "Maria Elena Walsh",
   ],
   startButton = document.getElementById("start"),
   icon_width = 300,
@@ -304,62 +304,67 @@ function rollReel() {
 }
 //! ------------- Machine animation ------------------
 let clickCount = 0;
+let ticketClicked = false;
 
 function slotMachineAnimation() {
   const text = document.getElementById("text");
   const storedQuestions = localStorage.getItem("questions");
-
-  if (storedQuestions) {
-    const parsedQuestions = JSON.parse(storedQuestions);
-    const indiceRandom = Math.floor(Math.random() * parsedQuestions.length);
-    text.textContent = `${parsedQuestions[indiceRandom]}`;
-  } else if (
-    !storedQuestions ||
-    storedQuestions === null ||
-    storedQuestions === ""
-  ) {
-    const indiceRandom = Math.floor(Math.random() * questionsMap.length);
-    text.textContent = `${questionsMap[indiceRandom]}`;
-  }
+  text.textContent = "";
 
   const ball = document.getElementById("ball");
   const stick = document.getElementById("stick");
   const ticket = document.getElementById("ticket");
 
-  // Reinicia la animación removiendo y volviendo a agregar la clase
   ball.style.animation = "none";
   stick.style.animation = "none";
   ticket.style.animation = "none";
   text.style.animation = "none";
 
-  // Fuerza el navegador a recalcular los estilos
   void ball.offsetWidth;
   void stick.offsetWidth;
+  void ticket.offsetWidth;
 
-  // Vuelve a iniciar las animaciones
   ball.style.animation = "ballColorChange 2s forwards";
-  stick.style.animation = "stickShorten 2s forwards";
+  stick.style.animation = "stickShorten 2s forwards ";
 
-  // Aplica animación dependiendo del número de clics
-  if (clickCount >= 1) {
-    ticket.style.animation = "ticketDrop 2s forwards";
-  } else {
+  if (ticketClicked) {
+    ticket.style.animation = "ticketDrop 1s forwards";
+    text.style.animation = "ticketText 2s forwards .5s";
+
+    if (clickCount >= 1) {
+      text.style.animation = "ticketText 2s forwards";
+      ticket.style.animation = "ticket 2s forwards .5s ";
+    }
+    ticketClicked = false;
+  } else if (clickCount === 0) {
     ticket.style.animation = "ticket 2s forwards";
+    text.style.animation = "ticketText 2s forwards .5s";
+
+    ticketClicked = false;
+  } else {
+    text.style.animation = "ticketText 2s forwards";
+    ticket.style.animation = "ticketDrop 1s forwards, ticket 2s forwards  1s";
   }
 
-  text.style.animation = "ticketText 2s forwards";
+  if (storedQuestions) {
+    const parsedQuestions = JSON.parse(storedQuestions);
+    const indiceRandom = Math.floor(Math.random() * parsedQuestions.length);
+    text.textContent = `${parsedQuestions[indiceRandom]}`;
+  } else {
+    const indiceRandom = Math.floor(Math.random() * questionsMap.length);
+    text.textContent = `${questionsMap[indiceRandom]}`;
+  }
 
-  // Incrementa el contador de clics
   clickCount++;
 }
 
-// Añade el event listener al botón start
+ticket.addEventListener("click", () => {
+  ticket.style.animation = "ticketDrop 0.5s forwards";
+  ticketClicked = true;
+});
 
 startButton.addEventListener("click", slotMachineAnimation);
-
-// Start button event listener
 startButton.addEventListener("click", rollReel);
-localStorage.clear();
 
 function updateLastAccessDate() {
   const currentDate = new Date().getTime();
@@ -376,13 +381,10 @@ function clearLocalStorageIfNeeded() {
       localStorage.clear();
     }
   } else {
-    // Si no hay fecha de acceso, guárdala ahora
     updateLastAccessDate();
   }
 }
 
-// Llamar a la función para verificar y limpiar localStorage si es necesario
 clearLocalStorageIfNeeded();
 
-// Luego, actualizar la fecha de acceso al usar la aplicación
 updateLastAccessDate();

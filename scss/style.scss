@@ -8,10 +8,11 @@ $font_questions: Ticketing;
   font-family: Ticketing;
   src: url(./../fonts/Ticketing.ttf);
 }
-
 body {
-  overflow: hidden;
   margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
   font-size: 18px;
   background: rgb(0, 0, 0);
   background: radial-gradient(
@@ -22,6 +23,7 @@ body {
     rgba(3, 34, 71, 1) 73%,
     #03254c 100%
   );
+  background-repeat: no-repeat;
 }
 main {
   display: flex;
@@ -196,7 +198,7 @@ main {
         z-index: 3;
         height: 30px;
         width: 30px;
-        transform: translate(-9px, -60px);
+        transform: translate(-9px, 25px);
         border-radius: 15px;
         border: 1px solid rgb(224, 73, 73);
         background: linear-gradient(rgb(255, 106, 106) 0%, rgb(155, 4, 4) 100%);
@@ -208,7 +210,7 @@ main {
         width: 12px;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
-        transform: translateY(-65px);
+        transform: translateY(20px);
 
         background: linear-gradient(
           to right,
@@ -239,15 +241,14 @@ main {
         }
         50% {
           background: linear-gradient(rgb(255, 69, 69) 0%, rgb(155, 4, 4) 100%);
-          transform: translate(-9px, -45px);
+          transform: translate(-9px, 50px);
         }
       }
 
       @keyframes stickShorten {
-        0%,
-        100% {
+        0% {
           height: 110px;
-          transform: translateY(-65px);
+          transform: translateY(20px);
           background: linear-gradient(
             to right,
             #808080,
@@ -266,7 +267,7 @@ main {
         }
         50% {
           height: 80px;
-          transform: translateY(-50px);
+          transform: translateY(45px);
           background: linear-gradient(
             to right,
             #808080,
@@ -328,10 +329,10 @@ main {
         hsl(0deg 0% 85%) 80%,
         hsl(0deg 0% 57%) 100%
       );
-      border-bottom: 3px dashed rgb(48, 47, 47);
       width: 300px;
       height: 0;
       position: absolute;
+      cursor: pointer;
 
       z-index: 100;
       display: flex;
@@ -349,25 +350,21 @@ main {
       @keyframes ticket {
         0% {
           height: 0px;
+          border-bottom: none;
+        }
+        10% {
+          border-bottom: 2.5px dashed rgb(90, 89, 89);
         }
         100% {
-          height: 140px;
-          transform: translateY(70px);
-        }
-      }
-
-      @keyframes ticketText {
-        0% {
-          transform: translateY(-50px);
-        }
-        100% {
-          transform: translateY(0px);
+          height: 150px;
+          transform: translateY(75px);
+          border-bottom: 2.5px dashed rgb(90, 89, 89);
         }
       }
       @keyframes ticketDrop {
         0% {
-          height: 140px;
-          transform: translateY(65px);
+          height: 150px;
+          transform: translateY(75px);
         }
         20% {
           transform: rotate(-45deg);
@@ -381,14 +378,22 @@ main {
           opacity: 0;
           border: none;
         }
-        70% {
+        100% {
           transform: translateY(0px);
           height: 0px;
-          border: none;
+          border-bottom: none;
+        }
+      }
+      @keyframes ticketText {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-20px);
         }
         100% {
-          height: 140px;
-          transform: translateY(70px);
+          transform: translateY(-5px);
         }
       }
     }
