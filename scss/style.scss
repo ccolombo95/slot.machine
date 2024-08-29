@@ -620,6 +620,7 @@ section {
     }
     aside.active {
       height: min-content;
+      position: absolute;
     }
     aside.questions.active {
       width: 85vw;
