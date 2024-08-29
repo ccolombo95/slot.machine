@@ -584,6 +584,9 @@ section {
 }
 
 @media screen and (max-width: 900px) {
+  body {
+    overflow: scroll;
+  }
   section {
     aside {
       width: 70px;
@@ -616,17 +619,15 @@ section {
       }
     }
     aside.active {
-      height: max-content;
+      height: min-content;
     }
     aside.questions.active {
-      position: absolute;
       width: 85vw;
       z-index: 100000;
     }
     aside.names.active {
       width: 85vw;
       z-index: 10000;
-      position: absolute;
     }
   }
   @media screen and (max-width: 650px) {
