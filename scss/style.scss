@@ -636,8 +636,8 @@ section {
       padding-top: 6rem;
       .top {
         .arrow {
-          height: 30px;
-          width: 45px;
+          height: 20px;
+          width: 25px;
         }
 
         .slots {
@@ -739,9 +739,10 @@ section {
 
       .bottom {
         height: 7px;
-        width: 244px;
+        width: 242px;
         padding: 0.25 * $icon_height;
-        margin-left: 1rem;
+        margin-left: 0rem;
+        margin-right: 0.2rem;
 
         .ticket {
           width: 240px;
