@@ -119,10 +119,16 @@ const questionsMap = [
     "Maria Elena Walsh",
   ],
   startButton = document.getElementById("start"),
-  icon_width = 300,
-  icon_height = 91.6,
   num_icons = 10,
   time_per_icon = 50;
+
+let icon_height;
+
+if (window.innerWidth >= 650) {
+  icon_height = 91.6;
+} else {
+  icon_height = 71.6;
+}
 
 let index = 0;
 
